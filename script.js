@@ -34,64 +34,62 @@ function showHome(username, avatarUrl) {
     avatarUrl || "https://via.placeholder.com/100";
 }
 
-// --- Helper: fetch username from table ---
+// --- Helper: fetch username from app_users table ---
 async function getUsername(userId) {
   const { data, error } = await supabase
     .from("app_users")
     .select("username")
     .eq("id", userId)
     .single();
-  if (error) {
-    console.error("Error fetching username:", error);
-    return "Unknown User";
+  if (error || !data) {
+    console.warn("Username not found in app_users:", error);
+    return null;
   }
   return data.username;
 }
 
 // --- Sign-up ---
-document
-  .getElementById("registrationForm")
-  .addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    const messageDiv = document.getElementById("message");
-    messageDiv.className = "";
-    messageDiv.textContent = "";
+document.getElementById("registrationForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const messageDiv = document.getElementById("message");
+  messageDiv.className = "";
+  messageDiv.textContent = "";
 
-    if (password !== confirmPassword) {
-      messageDiv.textContent = "Passwords do not match!";
-      messageDiv.className = "error";
-      return;
-    }
-    if (username.length < 3) {
-      messageDiv.textContent = "Username must be at least 3 characters long.";
-      messageDiv.className = "error";
-      return;
-    }
+  if (password !== confirmPassword) {
+    messageDiv.textContent = "Passwords do not match!";
+    messageDiv.className = "error";
+    return;
+  }
+  if (username.length < 3) {
+    messageDiv.textContent = "Username must be at least 3 characters long.";
+    messageDiv.className = "error";
+    return;
+  }
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { username } },
-    });
-    if (error) {
-      messageDiv.textContent = error.message;
-      messageDiv.className = "error";
-      return;
-    }
-
-    const { error: insertError } = await supabase
-      .from("app_users")
-      .insert({ id: data.user.id, username });
-    if (insertError) console.error("Insert user error:", insertError);
-
-    messageDiv.textContent = `Registration successful! Welcome, ${username}!`;
-    messageDiv.className = "success";
-    setTimeout(() => showHome(username), 800);
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { data: { username } },
   });
+  if (error) {
+    messageDiv.textContent = error.message;
+    messageDiv.className = "error";
+    return;
+  }
+
+  const { error: insertError } = await supabase
+    .from("app_users")
+    .insert({ id: data.user.id, username });
+  if (insertError) console.error("Insert user error:", insertError);
+
+  messageDiv.textContent = `Registration successful! Welcome, ${username}!`;
+  messageDiv.className = "success";
+  setTimeout(() => showHome(username), 800);
+});
 
 // --- Login ---
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
@@ -102,18 +100,14 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   messageDiv.className = "";
   messageDiv.textContent = "";
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
     messageDiv.textContent = error.message;
     messageDiv.className = "error";
     return;
   }
 
-  const username = await getUsername(data.user.id);
-
+  const username = (await getUsername(data.user.id)) || data.user.email;
   showHome(username, data.user.user_metadata?.avatar_url || null);
 });
 
@@ -123,14 +117,12 @@ async function handleDiscordOAuth() {
     provider: "discord",
     options: { scopes: "identify email guilds" },
   });
-  if (error) console.error("Discord OAuth error:", error.message);
+  if (error) {
+    console.error("Discord OAuth error:", error.message);
+  }
 }
-document
-  .getElementById("discordLoginSignup")
-  .addEventListener("click", handleDiscordOAuth);
-document
-  .getElementById("discordLoginLogin")
-  .addEventListener("click", handleDiscordOAuth);
+document.getElementById("discordLoginSignup").addEventListener("click", handleDiscordOAuth);
+document.getElementById("discordLoginLogin").addEventListener("click", handleDiscordOAuth);
 
 // --- Discord servers ---
 async function fetchDiscordServers(access_token) {
@@ -142,9 +134,7 @@ async function fetchDiscordServers(access_token) {
     const servers = await res.json();
     return servers.map((g) => ({
       name: g.name,
-      icon: g.icon
-        ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png`
-        : null,
+      icon: g.icon ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png` : null,
       id: g.id,
     }));
   } catch (err) {
@@ -158,26 +148,37 @@ function showServers(servers) {
   servers.forEach((server) => {
     const div = document.createElement("div");
     div.className = "server-card";
-    div.innerHTML = `<img src="${
-      server.icon || "https://via.placeholder.com/50"
-    }" alt="${server.name}"/><span>${server.name}</span>`;
+    div.innerHTML = `<img src="${server.icon || "https://via.placeholder.com/50"}" alt="${server.name}"/><span>${server.name}</span>`;
     container.appendChild(div);
   });
 }
 
-// --- Auth state ---
+// --- Auth state / session handling ---
+async function handleSession(user, providerToken) {
+  let username = await getUsername(user.id);
+  // If Discord login and username does not exist yet, create one
+  if (!username && user.app_metadata?.provider === "discord") {
+    const defaultUsername = user.user_metadata?.full_name || `DiscordUser_${user.id.slice(0,5)}`;
+    const { error: insertError } = await supabase
+      .from("app_users")
+      .insert({ id: user.id, username: defaultUsername });
+    if (insertError) console.error("Insert Discord user error:", insertError);
+    username = defaultUsername;
+  }
+  username = username || user.email;
+  const avatarUrl = user.user_metadata?.avatar_url || null;
+  showHome(username, avatarUrl);
+
+  if (providerToken) {
+    const servers = await fetchDiscordServers(providerToken);
+    showServers(servers);
+  }
+}
+
+// Listen for auth state changes
 supabase.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
-    const user = session.user;
-    const username = await getUsername(user.id);
-    const avatarUrl = user.user_metadata?.avatar_url || null;
-    showHome(username, avatarUrl);
-
-    if (user.app_metadata?.provider === "discord") {
-      const access_token = session.provider_token;
-      const servers = await fetchDiscordServers(access_token);
-      showServers(servers);
-    }
+    await handleSession(session.user, session.provider_token);
   }
 });
 
@@ -189,48 +190,32 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 });
 
 // --- Delete account ---
-document
-  .getElementById("deleteAccountBtn")
-  .addEventListener("click", async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    const confirmed = confirm(
-      "Are you sure you want to delete your account? This cannot be undone.",
-    );
-    if (!confirmed) return;
-
-    const { error: deleteAuthError } = await supabase.auth.admin.deleteUser(
-      user.id,
-    );
-    const { error: deleteTableError } = await supabase
-      .from("app_users")
-      .delete()
-      .eq("id", user.id);
-
-    if (deleteAuthError) console.error("Delete auth error:", deleteAuthError);
-    if (deleteTableError)
-      console.error("Delete table error:", deleteTableError);
-
-    document.getElementById("homeContainer").style.display = "none";
-    document.getElementById("signupContainer").style.display = "flex";
-  });
-
-// --- Keep session ---
-(async () => {
+document.getElementById("deleteAccountBtn").addEventListener("click", async () => {
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (session?.user) {
-    const user = session.user;
-    const username = await getUsername(user.id);
-    const avatarUrl = user.user_metadata?.avatar_url || null;
-    showHome(username, avatarUrl);
+    data: { user },
+  } = await supabase.auth.getUser();
+  const confirmed = confirm(
+    "Are you sure you want to delete your account? This cannot be undone.",
+  );
+  if (!confirmed) return;
 
-    if (user.app_metadata?.provider === "discord") {
-      const access_token = session.provider_token;
-      const servers = await fetchDiscordServers(access_token);
-      showServers(servers);
-    }
+  const { error: deleteAuthError } = await supabase.auth.admin.deleteUser(user.id);
+  const { error: deleteTableError } = await supabase
+    .from("app_users")
+    .delete()
+    .eq("id", user.id);
+
+  if (deleteAuthError) console.error("Delete auth error:", deleteAuthError);
+  if (deleteTableError) console.error("Delete table error:", deleteTableError);
+
+  document.getElementById("homeContainer").style.display = "none";
+  document.getElementById("signupContainer").style.display = "flex";
+});
+
+// --- Keep session on page load ---
+(async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.user) {
+    await handleSession(session.user, session.provider_token);
   }
 })();
