@@ -34,6 +34,20 @@ function showHome(username, avatarUrl) {
     avatarUrl || "https://via.placeholder.com/100";
 }
 
+// --- Helper: fetch username from table ---
+async function getUsername(userId) {
+  const { data, error } = await supabase
+    .from("app_users")
+    .select("username")
+    .eq("id", userId)
+    .single();
+  if (error) {
+    console.error("Error fetching username:", error);
+    return "Unknown User";
+  }
+  return data.username;
+}
+
 // --- Sign-up ---
 document
   .getElementById("registrationForm")
@@ -98,12 +112,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     return;
   }
 
-  const { data: userTableData } = await supabase
-    .from("app_users")
-    .select("username")
-    .eq("id", data.user.id)
-    .single();
-  const username = userTableData?.username || data.user.email;
+  const username = await getUsername(data.user.id);
 
   showHome(username, data.user.user_metadata?.avatar_url || null);
 });
@@ -149,7 +158,9 @@ function showServers(servers) {
   servers.forEach((server) => {
     const div = document.createElement("div");
     div.className = "server-card";
-    div.innerHTML = `<img src="${server.icon || "https://via.placeholder.com/50"}" alt="${server.name}"/><span>${server.name}</span>`;
+    div.innerHTML = `<img src="${
+      server.icon || "https://via.placeholder.com/50"
+    }" alt="${server.name}"/><span>${server.name}</span>`;
     container.appendChild(div);
   });
 }
@@ -158,9 +169,10 @@ function showServers(servers) {
 supabase.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
     const user = session.user;
-    const username = userTableData?.username || "I dont know who u arrr";
+    const username = await getUsername(user.id);
     const avatarUrl = user.user_metadata?.avatar_url || null;
     showHome(username, avatarUrl);
+
     if (user.app_metadata?.provider === "discord") {
       const access_token = session.provider_token;
       const servers = await fetchDiscordServers(access_token);
@@ -211,14 +223,10 @@ document
   } = await supabase.auth.getSession();
   if (session?.user) {
     const user = session.user;
-    const { data: userTableData } = await supabase
-      .from("app_users")
-      .select("username")
-      .eq("id", user.id)
-      .single();
-    const username = user.user_metadata?.username || user.email;
+    const username = await getUsername(user.id);
     const avatarUrl = user.user_metadata?.avatar_url || null;
     showHome(username, avatarUrl);
+
     if (user.app_metadata?.provider === "discord") {
       const access_token = session.provider_token;
       const servers = await fetchDiscordServers(access_token);
