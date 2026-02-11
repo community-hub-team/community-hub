@@ -47,35 +47,35 @@ const messageDiv = document.getElementById("message");
 messageDiv.className = "";
 messageDiv.textContent = "";
 
-if (password !== confirmPassword) {
-messageDiv.textContent = "Passwords do not match!";
-messageDiv.className = "error";
-return;
-}
-if (username.length < 3) {
-messageDiv.textContent = "Username must be at least 3 characters long.";
-messageDiv.className = "error";
-return;
-}
+if (password !== confirmPassword) {  
+  messageDiv.textContent = "Passwords do not match!";  
+  messageDiv.className = "error";  
+  return;  
+}  
+if (username.length < 3) {  
+  messageDiv.textContent = "Username must be at least 3 characters long.";  
+  messageDiv.className = "error";  
+  return;  
+}  
 
-const { data, error } = await supabase.auth.signUp({
-email,
-password,
-options: { data: { username } },
-});
-if (error) {
-messageDiv.textContent = error.message;
-messageDiv.className = "error";
-return;
-}
+const { data, error } = await supabase.auth.signUp({  
+  email,  
+  password,  
+  options: { data: { username } },  
+});  
+if (error) {  
+  messageDiv.textContent = error.message;  
+  messageDiv.className = "error";  
+  return;  
+}  
 
-const { error: insertError } = await supabase
-.from("app_users")
-.insert({ id: data.user.id, username });
-if (insertError) console.error("Insert user error:", insertError);
+const { error: insertError } = await supabase  
+  .from("app_users")  
+  .insert({ id: data.user.id, username });  
+if (insertError) console.error("Insert user error:", insertError);  
 
-messageDiv.textContent = Registration successful! Welcome, ${username}!;
-messageDiv.className = "success";
+messageDiv.textContent = `Registration successful! Welcome, ${username}!`;  
+messageDiv.className = "success";  
 setTimeout(() => showHome(username), 800);
 
 });
@@ -189,19 +189,19 @@ const confirmed = confirm(
 );
 if (!confirmed) return;
 
-const { error: deleteAuthError } = await supabase.auth.admin.deleteUser(
-user.id,
-);
-const { error: deleteTableError } = await supabase
-.from("app_users")
-.delete()
-.eq("id", user.id);
+const { error: deleteAuthError } = await supabase.auth.admin.deleteUser(  
+  user.id,  
+);  
+const { error: deleteTableError } = await supabase  
+  .from("app_users")  
+  .delete()  
+  .eq("id", user.id);  
 
-if (deleteAuthError) console.error("Delete auth error:", deleteAuthError);
-if (deleteTableError)
-console.error("Delete table error:", deleteTableError);
+if (deleteAuthError) console.error("Delete auth error:", deleteAuthError);  
+if (deleteTableError)  
+  console.error("Delete table error:", deleteTableError);  
 
-document.getElementById("homeContainer").style.display = "none";
+document.getElementById("homeContainer").style.display = "none";  
 document.getElementById("signupContainer").style.display = "flex";
 
 });
