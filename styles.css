@@ -5,27 +5,30 @@ body {
   background: #0d0d0d;
   color: #e0e0e0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 10px;
+  width: 100%;
 }
+
 .container {
   width: 100%;
   max-width: 420px;
+  margin: 0 auto;
   background: #141414;
   border-radius: 14px;
   padding: 30px 20px;
   box-shadow: 0 8px 30px rgba(0, 212, 255, 0.12);
   border: 1px solid #1e1e1e;
-  display: flex;
+  display: none; /* JS toggles display:flex */
   flex-direction: column;
   justify-content: flex-start;
   min-height: 100vh;
 }
 
-/* Top bar */
+/* TOP BAR */
 .home-top-bar {
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,12 +37,12 @@ body {
 .home-top-bar .app-title { font-weight: 600; color: #00d4ff; font-size: 1.2rem; }
 #profilePic { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #00d4ff; cursor: pointer; }
 
-/* Greeting */
+/* GREETING */
 .home-greeting { text-align: left; margin-bottom: 20px; }
 .home-greeting h1 { font-size: 1.4rem; color: #00d4ff; }
 .home-greeting p { font-size: 0.9rem; color: #aaa; margin-top: 4px; }
 
-/* Cards */
+/* CARDS */
 .home-cards { display: flex; flex-direction: column; gap: 12px; }
 .server-card {
   display: flex; align-items: center; justify-content: space-between;
@@ -51,17 +54,18 @@ body {
 .server-card span { font-size: 1rem; color: #e0e0e0; }
 .server-card i { font-size: 1rem; color: #888; }
 
-/* Bottom nav */
+/* BOTTOM NAV */
 .home-nav {
-  position: sticky; bottom: 0; left: 0;
-  width: 100%; display: flex; justify-content: space-around;
-  background: #141414; border-top: 1px solid #222; padding: 10px 0; border-radius: 12px 12px 0 0;
+  position: fixed; bottom: 0; left: 0;
+  width: 100%; max-width: 420px;
+  display: flex; justify-content: space-around;
+  background: #141414; border-top: 1px solid #222; padding: 10px 0;
 }
 .home-nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; color: #888; cursor: pointer; transition: color 0.2s ease; }
 .home-nav-item i { font-size: 1.4rem; margin-bottom: 2px; }
 .home-nav-item.active { color: #00d4ff; }
 
-/* Sign-up/login styling (unchanged) */
+/* SIGNUP/LOGIN FORM */
 h1 { color: #00d4ff; font-size: 1.9rem; margin-bottom: 20px; text-align: center; }
 .form-group { margin-bottom: 14px; position: relative; }
 label { color: #a0a0a0; font-size: 0.9rem; }
@@ -74,38 +78,10 @@ button { width: 100%; padding: 12px; margin-top: 10px; background: #00d4ff; colo
 .discord-btn { background: #5865f2; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; margin-bottom: 8px; }
 .discord-btn:hover { background: #4752c4; }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 480px) {
   .container { padding: 20px 16px; }
   #profilePic { width: 36px; height: 36px; }
   .home-greeting h1 { font-size: 1.2rem; }
   .server-card { padding: 10px 12px; }
 }
-/* Ensure body is column on all screens */
-body {
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-/* Containers should always take full width and not float side by side */
-.container {
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  display: flex; /* JS will override display: none/flex */
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 100vh;
-}
-
-/* Make sure hidden screens stay hidden */
-#signupContainer,
-#loginContainer,
-#homeContainer,
-#dashboardContainer {
-  display: none; /* default hidden */
-}
-
-/* JS will toggle display: flex */
