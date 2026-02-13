@@ -1,112 +1,130 @@
-<!doctype html>
+<!doctype html>  
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Hub</title>
 
-<html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-  <title>Community Hub</title>    <!-- Font Awesome (only for dashboard) -->    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />  
-  <link rel="stylesheet" href="styles.css" />  
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />  
-</head>  
-<body>    <!-- Sign-up container -->    <div class="container" id="signupContainer">  
-    <h1>Community Hub Sign-Up</h1>  
-    <form id="registrationForm">  
-      <div class="form-group">  
-        <label for="username">Username <span class="required">*</span></label>  
-        <input type="text" id="username" placeholder="Choose a username" required />  
-      </div>  
-      <div class="form-group">  
-        <label for="email">Email <span class="required">*</span></label>  
-        <input type="email" id="email" placeholder="you@example.com" required />  
-      </div>  
-      <div class="form-group">  
-        <label for="password">Password <span class="required">*</span></label>  
-        <input type="password" id="password" placeholder="••••••••" required />  
-        <i class="fas fa-eye toggle-password" id="togglePassword"></i>  
-      </div>  
-      <div class="form-group">  
-        <label for="confirmPassword">Confirm Password <span class="required">*</span></label>  
-        <input type="password" id="confirmPassword" placeholder="••••••••" required />  
-        <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>  
-      </div>  
-      <button type="submit">Create Account</button>  
-    </form>  
-    <div class="login-link" id="switchLoginLink">Already have an account? Login</div>  
-    <button id="discordLoginSignup" class="discord-btn">  
-      <i class="fab fa-discord"></i> Sign in with Discord  
-    </button>  
-    <div id="message"></div>  
-  </div>    <!-- Login container -->    <div class="container" id="loginContainer" style="display: none">  
-    <h1>Community Hub Login</h1>  
-    <form id="loginForm">  
-      <div class="form-group">  
-        <label for="loginEmail">Email <span class="required">*</span></label>  
-        <input type="email" id="loginEmail" placeholder="you@example.com" required />  
-      </div>  
-      <div class="form-group">  
-        <label for="loginPassword">Password <span class="required">*</span></label>  
-        <input type="password" id="loginPassword" placeholder="••••••••" required />  
-        <i class="fas fa-eye toggle-password" id="toggleLoginPassword"></i>  
-      </div>  
-      <button type="submit">Login</button>  
-    </form>  
-    <div class="login-link" id="switchSignupLink">Don't have an account? Sign up</div>  
-    <button id="discordLoginLogin" class="discord-btn">  
-      <i class="fab fa-discord"></i> Sign in with Discord  
-    </button>  
-    <div id="loginMessage"></div>  
-  </div>    <!-- Current homepage -->    <div class="container" id="homeContainer">  
-    <img id="profilePic" src="https://via.placeholder.com/100" alt="Avatar" />  
+  <!-- Font Awesome (only for dashboard) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+<body>
+
+  <!-- Sign-up container -->
+  <div class="container" id="signupContainer">
+    <h1>Community Hub Sign-Up</h1>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="username">Username <span class="required">*</span></label>
+        <input type="text" id="username" placeholder="Choose a username" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email <span class="required">*</span></label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password <span class="required">*</span></label>
+        <input type="password" id="password" placeholder="••••••••" required />
+        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+        <input type="password" id="confirmPassword" placeholder="••••••••" required />
+        <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>
+      </div>
+      <button type="submit">Create Account</button>
+    </form>
+    <div class="login-link" id="switchLoginLink">Already have an account? Login</div>
+    <button id="discordLoginSignup" class="discord-btn">
+      <i class="fab fa-discord"></i> Sign in with Discord
+    </button>
+    <div id="message"></div>
+  </div>
+
+  <!-- Login container -->
+  <div class="container" id="loginContainer" style="display: none">
+    <h1>Community Hub Login</h1>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Email <span class="required">*</span></label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password <span class="required">*</span></label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required />
+        <i class="fas fa-eye toggle-password" id="toggleLoginPassword"></i>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="login-link" id="switchSignupLink">Don't have an account? Sign up</div>
+    <button id="discordLoginLogin" class="discord-btn">
+      <i class="fab fa-discord"></i> Sign in with Discord
+    </button>
+    <div id="loginMessage"></div>
+  </div>
+
+  <!-- Current homepage -->
+  <div class="container" id="homeContainer">
+    <img id="profilePic" src="https://via.placeholder.com/100" alt="Avatar" />
     <h1 id="homeUsername">Welcome!</h1>
-    <button id="backToDashboardBtn">⬅ Back</button>  
-    <div id="homeServers" class="server-list"></div>  
-    <button id="logoutBtn">Log Out</button>  
-    <button id="deleteAccountBtn">Delete Account</button>  
-  </div>    <!-- Dashboard homepage -->    <div class="container" id="dashboardContainer" style="display: none;">  
-    <img id="dashboardProfilePic" src="https://via.placeholder.com/100" alt="Profile" />  
-    <h1 id="dashboardGreeting">Good afternoon, User 👋</h1>  
-    <p>Here's what's happening today</p>  <div class="dashboard-cards">  
-  <div class="dashboard-card">  
-    <i class="fas fa-bullhorn"></i>  
-    <div>  
-      <h3>Announcements</h3>  
-      <p>Latest updates from your teams</p>  
-    </div>  
-  </div>  
-  <div class="dashboard-card">  
-    <i class="fas fa-list"></i>  
-    <div>  
-      <h3>Task List</h3>  
-      <p>View and manage your tasks</p>  
-    </div>  
-  </div>  
-  <div class="dashboard-card">  
-    <i class="fas fa-calendar"></i>  
-    <div>  
-      <h3>Upcoming Events</h3>  
-      <p>Meetings and scheduled activities</p>  
-    </div>  
-  </div>  
-</div>  
+    <button id="backToDashboardBtn">⬅ Back to Dashboard</button>
+    <div id="homeServers" class="server-list"></div>
+    <button id="logoutBtn">Log Out</button>
+    <button id="deleteAccountBtn">Delete Account</button>
+  </div>
 
-<div class="dashboard-nav">  
-  <div class="dashboard-nav-item active">  
-    <i class="fas fa-home"></i>  
-    <span>Home</span>  
-  </div>  
-  <div class="dashboard-nav-item">  
-    <i class="fas fa-tasks"></i>  
-    <span>Tasks</span>  
-  </div>  
-  <div class="dashboard-nav-item">  
-    <i class="fas fa-users"></i>  
-    <span>Teams</span>  
-  </div>  
-  <div class="dashboard-nav-item">  
-    <i class="fas fa-cog"></i>  
-    <span>Settings</span>  
-  </div>  
-</div>
+  <!-- Dashboard homepage -->
+  <div class="container" id="dashboardContainer" style="display: none;">
+    <img id="dashboardProfilePic" src="https://via.placeholder.com/100" alt="Profile" />
+    <h1 id="dashboardGreeting">Good afternoon, User 👋</h1>
+    <p>Here's what's happening today</p>
 
-  </div>    <script type="module" src="script.js"></script>  </body>  
+    <div class="dashboard-cards">
+      <div class="dashboard-card">
+        <i class="fas fa-bullhorn"></i>
+        <div>
+          <h3>Announcements</h3>
+          <p>Latest updates from your teams</p>
+        </div>
+      </div>
+      <div class="dashboard-card">
+        <i class="fas fa-list"></i>
+        <div>
+          <h3>Task List</h3>
+          <p>View and manage your tasks</p>
+        </div>
+      </div>
+      <div class="dashboard-card">
+        <i class="fas fa-calendar"></i>
+        <div>
+          <h3>Upcoming Events</h3>
+          <p>Meetings and scheduled activities</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-nav">
+      <div class="dashboard-nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </div>
+      <div class="dashboard-nav-item">
+        <i class="fas fa-tasks"></i>
+        <span>Tasks</span>
+      </div>
+      <div class="dashboard-nav-item">
+        <i class="fas fa-users"></i>
+        <span>Teams</span>
+      </div>
+      <div class="dashboard-nav-item">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
 </html>
