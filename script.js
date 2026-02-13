@@ -2,10 +2,14 @@ import { supabase } from "./supabaseClient.js";
 
 let CURRENT_USER = null;
 
-/* CONTAINERS */
+/* DOM References */
 const signupContainer = document.getElementById("signupContainer");
 const loginContainer = document.getElementById("loginContainer");
 const homeContainer = document.getElementById("homeContainer");
+const dashboardContainer = document.getElementById("dashboardContainer");
+
+const dashboardGreeting = document.getElementById("dashboardGreeting");
+const dashboardProfilePic = document.getElementById("dashboardProfilePic");
 
 const homeUsername = document.getElementById("homeUsername");
 const profilePic = document.getElementById("profilePic");
@@ -24,30 +28,31 @@ const loginPassword = document.getElementById("loginPassword");
 const discordLoginSignup = document.getElementById("discordLoginSignup");
 const discordLoginLogin = document.getElementById("discordLoginLogin");
 
-/* HELPERS */
+/* ---------------- HELPERS ---------------- */
 async function getUsername(userId, fallbackEmail) {
   const { data } = await supabase.from("app_users").select("username").eq("id", userId).single();
   return data?.username || fallbackEmail;
 }
 
 async function getUserServers(userId) {
+  if (!userId) return [];
   const { data } = await supabase.from("servers").select("*").eq("member_id", userId);
   return data || [];
 }
 
-/* SHOW HOME */
+/* ---------------- UI ---------------- */
 async function showHome(username, avatarUrl) {
   signupContainer.style.display = "none";
   loginContainer.style.display = "none";
+  dashboardContainer.style.display = "none";
   homeContainer.style.display = "flex";
 
   homeUsername.textContent = `Good afternoon, ${username} 👋`;
   profilePic.src = avatarUrl || "https://via.placeholder.com/100";
 
-  const servers = await getUserServers(CURRENT_USER.id);
+  const servers = await getUserServers(CURRENT_USER?.id);
   homeServers.innerHTML = "";
-
-  if (!servers.length) {
+  if (servers.length === 0) {
     homeServers.innerHTML = "<p>No servers yet.</p>";
     return;
   }
@@ -66,13 +71,23 @@ async function showHome(username, avatarUrl) {
   });
 }
 
-/* NAVIGATION LOGIC */
-profilePic.onclick = async () => {
-  const username = await getUsername(CURRENT_USER.id, CURRENT_USER.email);
-  showHome(username, profilePic.src);
+function showDashboard(username, avatarUrl) {
+  signupContainer.style.display = "none";
+  loginContainer.style.display = "none";
+  homeContainer.style.display = "none";
+  dashboardContainer.style.display = "flex";
+
+  dashboardGreeting.textContent = `Good afternoon, ${username} 👋`;
+  dashboardProfilePic.src = avatarUrl || "https://via.placeholder.com/100";
+}
+
+/* ---------------- NAVIGATION ---------------- */
+dashboardProfilePic.onclick = async () => {
+  const username = await getUsername(CURRENT_USER?.id, CURRENT_USER?.email);
+  showHome(username, dashboardProfilePic.src);
 };
 
-/* SIGNUP */
+/* ---------------- AUTH ---------------- */
 registrationForm.addEventListener("submit", async e => {
   e.preventDefault();
   const username = usernameInput.value.trim();
@@ -81,37 +96,37 @@ registrationForm.addEventListener("submit", async e => {
 
   const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { username } } });
   if (error) return alert(error.message);
+
   await supabase.from("app_users").insert({ id: data.user.id, username });
   CURRENT_USER = data.user;
-  showHome(username);
+  showDashboard(username);
 });
 
-/* LOGIN */
 loginForm.addEventListener("submit", async e => {
   e.preventDefault();
   const { data, error } = await supabase.auth.signInWithPassword({ email: loginEmail.value, password: loginPassword.value });
   if (error) return alert(error.message);
   CURRENT_USER = data.user;
   const username = await getUsername(data.user.id, data.user.email);
-  showHome(username);
+  showDashboard(username);
 });
 
-/* DISCORD OAUTH */
+/* ---------------- DISCORD OAUTH ---------------- */
 async function handleDiscordOAuth() {
-  await supabase.auth.signInWithOAuth({
-    provider: "discord",
-    options: { scopes: "identify email guilds", redirectTo: window.location.origin }
-  });
+  await supabase.auth.signInWithOAuth({ provider: "discord", options: { scopes: "identify email guilds", redirectTo: window.location.href } });
 }
 discordLoginSignup.onclick = handleDiscordOAuth;
 discordLoginLogin.onclick = handleDiscordOAuth;
 
-/* SESSION RESTORE */
+/* ---------------- SESSION RESTORE ---------------- */
 supabase.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
     CURRENT_USER = session.user;
     const username = await getUsername(session.user.id, session.user.email);
-    showHome(username);
+    const avatarUrl = session.user.user_metadata?.avatar_url || null;
+    showDashboard(username, avatarUrl);
+  } else {
+    signupContainer.style.display = "flex"; // default to signup
   }
 });
 
@@ -120,8 +135,9 @@ supabase.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
     CURRENT_USER = session.user;
     const username = await getUsername(session.user.id, session.user.email);
-    showHome(username);
+    const avatarUrl = session.user.user_metadata?.avatar_url || null;
+    showDashboard(username, avatarUrl);
   } else {
-    signupContainer.style.display = "flex"; // default
+    signupContainer.style.display = "flex"; // default to signup
   }
 })();
