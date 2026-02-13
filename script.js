@@ -2,7 +2,7 @@ import { supabase } from "./supabaseClient.js";
 
 let CURRENT_USER = null;
 
-/* ---------------- DOM REFERENCES (CRITICAL FIX) ---------------- */
+/* ---------------- DOM REFERENCES ---------------- */
 const signupContainer = document.getElementById("signupContainer");
 const loginContainer = document.getElementById("loginContainer");
 const homeContainer = document.getElementById("homeContainer");
@@ -31,43 +31,28 @@ const backBtn = document.getElementById("backToDashboardBtn");
 const discordLoginSignup = document.getElementById("discordLoginSignup");
 const discordLoginLogin = document.getElementById("discordLoginLogin");
 
-
 /* ---------------- HELPERS ---------------- */
-
-// 🔥 ALWAYS fetch username from database (this fixes email bug)
 async function getUsername(userId, fallbackEmail) {
-  const { data } = await supabase
-    .from("app_users")
-    .select("username")
-    .eq("id", userId)
-    .single();
-
+  const { data } = await supabase.from("app_users").select("username").eq("id", userId).single();
   return data?.username || fallbackEmail;
 }
 
-// 🔥 Fetch Discord servers stored in DB
 async function getUserServers(userId) {
-  const { data } = await supabase
-    .from("servers")
-    .select("*")
-    .eq("member_id", userId);
-
+  const { data } = await supabase.from("servers").select("*").eq("member_id", userId);
   return data || [];
 }
 
-
 /* ---------------- UI SCREENS ---------------- */
-
 async function showHome(username, avatarUrl) {
   signupContainer.style.display = "none";
   loginContainer.style.display = "none";
   dashboardContainer.style.display = "none";
   homeContainer.style.display = "flex";
 
-  homeUsername.textContent = `Welcome, ${username}!`;
+  homeUsername.textContent = `Good afternoon, ${username} 👋`;
   profilePic.src = avatarUrl || "https://via.placeholder.com/100";
 
-  // load servers
+  // load servers/tasks as cards
   const servers = await getUserServers(CURRENT_USER.id);
   homeServers.innerHTML = "";
 
@@ -80,8 +65,12 @@ async function showHome(username, avatarUrl) {
     const div = document.createElement("div");
     div.className = "server-card";
     div.innerHTML = `
-      <img src="${server.icon || "https://via.placeholder.com/50"}">
-      <span>${server.name}</span>`;
+      <div class="left">
+        <img src="${server.icon || 'https://via.placeholder.com/50'}">
+        <span>${server.name}</span>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    `;
     homeServers.appendChild(div);
   });
 }
@@ -96,9 +85,7 @@ function showDashboard(username, avatarUrl) {
   dashboardProfilePic.src = avatarUrl || "https://via.placeholder.com/100";
 }
 
-
 /* ---------------- NAVIGATION ---------------- */
-
 dashboardProfilePic.onclick = async () => {
   const username = await getUsername(CURRENT_USER.id, CURRENT_USER.email);
   showHome(username, dashboardProfilePic.src);
@@ -109,30 +96,16 @@ backBtn.onclick = async () => {
   showDashboard(username, dashboardProfilePic.src);
 };
 
-
 /* ---------------- AUTH ---------------- */
-
 // SIGNUP
 registrationForm.addEventListener("submit", async e => {
   e.preventDefault();
-
   const username = usernameInput.value.trim();
   const email = emailInput.value.trim();
   const password = passwordInput.value;
-
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { data: { username } }
-  });
-
+  const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { username } } });
   if (error) return alert(error.message);
-
-  await supabase.from("app_users").insert({
-    id: data.user.id,
-    username
-  });
-
+  await supabase.from("app_users").insert({ id: data.user.id, username });
   CURRENT_USER = data.user;
   showDashboard(username);
 });
@@ -140,14 +113,8 @@ registrationForm.addEventListener("submit", async e => {
 // LOGIN
 loginForm.addEventListener("submit", async e => {
   e.preventDefault();
-
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: loginEmail.value,
-    password: loginPassword.value
-  });
-
+  const { data, error } = await supabase.auth.signInWithPassword({ email: loginEmail.value, password: loginPassword.value });
   if (error) return alert(error.message);
-
   CURRENT_USER = data.user;
   const username = await getUsername(data.user.id, data.user.email);
   showDashboard(username);
@@ -161,25 +128,17 @@ logoutBtn.onclick = async () => {
   signupContainer.style.display = "flex";
 };
 
-
 /* ---------------- DISCORD OAUTH ---------------- */
-
 async function handleDiscordOAuth() {
   await supabase.auth.signInWithOAuth({
     provider: "discord",
-    options: {
-      scopes: "identify email guilds",
-      redirectTo: "https://community-hub-team.github.io/community-hub/"
-    }
+    options: { scopes: "identify email guilds", redirectTo: "https://community-hub-team.github.io/community-hub/" }
   });
 }
-
 discordLoginSignup.onclick = handleDiscordOAuth;
 discordLoginLogin.onclick = handleDiscordOAuth;
 
-
 /* ---------------- SESSION RESTORE ---------------- */
-
 supabase.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
     CURRENT_USER = session.user;
