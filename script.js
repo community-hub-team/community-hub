@@ -1,5 +1,7 @@
 import { supabase } from "./supabaseClient.js";
 
+let CURRENT_USER = null; // store logged in user globally
+
 
 // --- Password toggles ---
 function setupToggle(inputId, toggleId) {
@@ -16,94 +18,113 @@ setupToggle("loginPassword", "toggleLoginPassword");
 
 
 // --- Switch login/signup ---
-document.getElementById("switchLoginLink").addEventListener("click", () => {
-  document.getElementById("signupContainer").style.display = "none";
-  document.getElementById("loginContainer").style.display = "flex";
-});
-document.getElementById("switchSignupLink").addEventListener("click", () => {
-  document.getElementById("loginContainer").style.display = "none";
-  document.getElementById("signupContainer").style.display = "flex";
-});
+document.getElementById("switchLoginLink").onclick = () => {
+  signupContainer.style.display = "none";
+  loginContainer.style.display = "flex";
+};
+document.getElementById("switchSignupLink").onclick = () => {
+  loginContainer.style.display = "none";
+  signupContainer.style.display = "flex";
+};
 
 
-// --- Show Home ---
-function showHome(username, avatarUrl, servers = []) {
-  document.getElementById("signupContainer").style.display = "none";
-  document.getElementById("loginContainer").style.display = "none";
-  document.getElementById("dashboardContainer").style.display = "none";
 
-  const home = document.getElementById("homeContainer");
-  home.style.display = "flex";
+// 🔥 FETCH USERNAME PROPERLY FROM TABLE
+async function getUsername(userId, fallbackEmail) {
+  const { data } = await supabase
+    .from("app_users")
+    .select("username")
+    .eq("id", userId)
+    .single();
 
-  document.getElementById("homeUsername").textContent = `Welcome, ${username}!`;
-  document.getElementById("profilePic").src =
-    avatarUrl || "https://via.placeholder.com/80";
+  return data?.username || fallbackEmail;
+}
 
-  const container = document.getElementById("homeServers");
-  container.innerHTML = "";
 
+
+// 🔥 FETCH USER SERVERS
+async function getUserServers(userId) {
+  const { data } = await supabase
+    .from("servers")
+    .select("*")
+    .eq("member_id", userId);
+
+  return data || [];
+}
+
+
+
+// --- Show Home (profile page) ---
+async function showHome(username, avatarUrl) {
+  signupContainer.style.display = "none";
+  loginContainer.style.display = "none";
+  dashboardContainer.style.display = "none";
+  homeContainer.style.display = "flex";
+
+  homeUsername.textContent = `Welcome, ${username}!`;
+  profilePic.src = avatarUrl || "https://via.placeholder.com/80";
+
+  // 🔥 load servers
+  const servers = await getUserServers(CURRENT_USER.id);
+
+  homeServers.innerHTML = "";
   servers.forEach(server => {
     const div = document.createElement("div");
     div.className = "server-card";
     div.innerHTML = `
       <img src="${server.icon || "https://via.placeholder.com/50"}">
       <span>${server.name}</span>`;
-    container.appendChild(div);
+    homeServers.appendChild(div);
   });
 }
 
 
+
 // --- Show Dashboard ---
 function showDashboard(username, avatarUrl) {
-  document.getElementById("signupContainer").style.display = "none";
-  document.getElementById("loginContainer").style.display = "none";
-  document.getElementById("homeContainer").style.display = "none";
+  signupContainer.style.display = "none";
+  loginContainer.style.display = "none";
+  homeContainer.style.display = "none";
+  dashboardContainer.style.display = "flex";
 
-  const dash = document.getElementById("dashboardContainer");
-  dash.style.display = "flex";
-
-  document.getElementById("dashboardGreeting").textContent =
-    `Good afternoon, ${username} 👋`;
-  document.getElementById("dashboardProfilePic").src =
-    avatarUrl || "https://via.placeholder.com/80";
+  dashboardGreeting.textContent = `Good afternoon, ${username} 👋`;
+  dashboardProfilePic.src = avatarUrl || "https://via.placeholder.com/80";
 }
 
 
-// --- Switch dashboard → home ---
-document.getElementById("dashboardProfilePic").addEventListener("click", () => {
-  const username = document.getElementById("dashboardGreeting")
-    .textContent.replace("Good afternoon, ", "")
-    .replace(" 👋", "");
-  const avatar = document.getElementById("dashboardProfilePic").src;
-  showHome(username, avatar);
+
+// 🔥 Dashboard → Profile click
+dashboardProfilePic.addEventListener("click", async () => {
+  const username = await getUsername(CURRENT_USER.id, CURRENT_USER.email);
+  showHome(username, dashboardProfilePic.src);
 });
+
+
+// 🔥 BACK BUTTON (HOME → DASHBOARD)
+document.getElementById("backToDashboardBtn").onclick = async () => {
+  const username = await getUsername(CURRENT_USER.id, CURRENT_USER.email);
+  showDashboard(username, dashboardProfilePic.src);
+};
+
 
 
 // --- Logout ---
-document.getElementById("logoutBtn").addEventListener("click", async () => {
+logoutBtn.onclick = async () => {
   await supabase.auth.signOut();
-  document.getElementById("homeContainer").style.display = "none";
-  document.getElementById("dashboardContainer").style.display = "none";
-  document.getElementById("signupContainer").style.display = "flex";
-});
+  homeContainer.style.display = "none";
+  dashboardContainer.style.display = "none";
+  signupContainer.style.display = "flex";
+};
+
 
 
 // --- Signup ---
-document.getElementById("registrationForm").addEventListener("submit", async e => {
+registrationForm.addEventListener("submit", async e => {
   e.preventDefault();
 
-  const username = document.getElementById("username").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
-  const messageDiv = document.getElementById("message");
-
-  messageDiv.textContent = "";
-
-  if (password !== confirmPassword) {
-    messageDiv.textContent = "Passwords do not match!";
-    return;
-  }
+  const username = usernameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -111,106 +132,70 @@ document.getElementById("registrationForm").addEventListener("submit", async e =
     options: { data: { username } }
   });
 
-  if (error) {
-    messageDiv.textContent = error.message;
-    return;
-  }
+  if (error) return alert(error.message);
 
   await supabase.from("app_users").insert({
     id: data.user.id,
     username
   });
 
+  CURRENT_USER = data.user;
   showDashboard(username);
 });
+
 
 
 // --- Login ---
-document.getElementById("loginForm").addEventListener("submit", async e => {
+loginForm.addEventListener("submit", async e => {
   e.preventDefault();
 
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
-
   const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password
+    email: loginEmail.value,
+    password: loginPassword.value
   });
 
-  if (error) {
-    document.getElementById("loginMessage").textContent = error.message;
-    return;
-  }
+  if (error) return alert(error.message);
 
-  const { data: userTableData } = await supabase
-    .from("app_users")
-    .select("username")
-    .eq("id", data.user.id)
-    .single();
+  CURRENT_USER = data.user;
 
-  const username = userTableData?.username || data.user.email;
+  const username = await getUsername(data.user.id, data.user.email);
   showDashboard(username);
 });
 
 
-// 🚨🚨🚨 DISCORD OAUTH FIX (THE IMPORTANT PART) 🚨🚨🚨
-async function handleDiscordOAuth() {
-  const redirectUrl =
-    "https://community-hub-team.github.io/community-hub/";
 
-  const { error } = await supabase.auth.signInWithOAuth({
+// --- Discord OAuth ---
+async function handleDiscordOAuth() {
+  await supabase.auth.signInWithOAuth({
     provider: "discord",
     options: {
       scopes: "identify email guilds",
-      redirectTo: redirectUrl
+      redirectTo: "https://community-hub-team.github.io/community-hub/"
     }
   });
-
-  if (error) console.error(error);
 }
 
-document.getElementById("discordLoginSignup")
-  .addEventListener("click", handleDiscordOAuth);
-
-document.getElementById("discordLoginLogin")
-  .addEventListener("click", handleDiscordOAuth);
+discordLoginSignup.onclick = handleDiscordOAuth;
+discordLoginLogin.onclick = handleDiscordOAuth;
 
 
-// --- Handle OAuth return session ---
-supabase.auth.onAuthStateChange((event, session) => {
-  if (event === "SIGNED_IN" && session?.user) {
-    const user = session.user;
-    const username =
-      user.user_metadata?.username ||
-      user.user_metadata?.full_name ||
-      user.email;
-    const avatarUrl = user.user_metadata?.avatar_url || null;
 
+// --- OAuth return + session restore ---
+supabase.auth.onAuthStateChange(async (event, session) => {
+  if (session?.user) {
+    CURRENT_USER = session.user;
+    const username = await getUsername(session.user.id, session.user.email);
+    const avatarUrl = session.user.user_metadata?.avatar_url || null;
     showDashboard(username, avatarUrl);
   }
 });
 
-
-// --- Restore session on refresh ---
 (async () => {
   const { data: { session } } = await supabase.auth.getSession();
-
   if (session?.user) {
-    const user = session.user;
-
-    const { data: userTableData } = await supabase
-      .from("app_users")
-      .select("username")
-      .eq("id", user.id)
-      .single();
-
-    const username =
-      userTableData?.username ||
-      user.user_metadata?.username ||
-      user.email;
-
-    const avatarUrl = user.user_metadata?.avatar_url || null;
-
+    CURRENT_USER = session.user;
+    const username = await getUsername(session.user.id, session.user.email);
+    const avatarUrl = session.user.user_metadata?.avatar_url || null;
     showDashboard(username, avatarUrl);
   }
 })();
