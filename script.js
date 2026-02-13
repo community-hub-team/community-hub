@@ -1,35 +1,40 @@
 import { supabase } from "./supabaseClient.js";
 
-let CURRENT_USER = null; // store logged in user globally
+let CURRENT_USER = null;
+
+/* ---------------- DOM REFERENCES (CRITICAL FIX) ---------------- */
+const signupContainer = document.getElementById("signupContainer");
+const loginContainer = document.getElementById("loginContainer");
+const homeContainer = document.getElementById("homeContainer");
+const dashboardContainer = document.getElementById("dashboardContainer");
+
+const dashboardGreeting = document.getElementById("dashboardGreeting");
+const dashboardProfilePic = document.getElementById("dashboardProfilePic");
+
+const homeUsername = document.getElementById("homeUsername");
+const profilePic = document.getElementById("profilePic");
+const homeServers = document.getElementById("homeServers");
+
+const registrationForm = document.getElementById("registrationForm");
+const loginForm = document.getElementById("loginForm");
+
+const usernameInput = document.getElementById("username");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+
+const loginEmail = document.getElementById("loginEmail");
+const loginPassword = document.getElementById("loginPassword");
+
+const logoutBtn = document.getElementById("logoutBtn");
+const backBtn = document.getElementById("backToDashboardBtn");
+
+const discordLoginSignup = document.getElementById("discordLoginSignup");
+const discordLoginLogin = document.getElementById("discordLoginLogin");
 
 
-// --- Password toggles ---
-function setupToggle(inputId, toggleId) {
-  const input = document.getElementById(inputId);
-  const toggle = document.getElementById(toggleId);
-  toggle.addEventListener("click", () => {
-    input.type = input.type === "password" ? "text" : "password";
-    toggle.classList.toggle("fa-eye-slash");
-  });
-}
-setupToggle("password", "togglePassword");
-setupToggle("confirmPassword", "toggleConfirmPassword");
-setupToggle("loginPassword", "toggleLoginPassword");
+/* ---------------- HELPERS ---------------- */
 
-
-// --- Switch login/signup ---
-document.getElementById("switchLoginLink").onclick = () => {
-  signupContainer.style.display = "none";
-  loginContainer.style.display = "flex";
-};
-document.getElementById("switchSignupLink").onclick = () => {
-  loginContainer.style.display = "none";
-  signupContainer.style.display = "flex";
-};
-
-
-
-// 🔥 FETCH USERNAME PROPERLY FROM TABLE
+// 🔥 ALWAYS fetch username from database (this fixes email bug)
 async function getUsername(userId, fallbackEmail) {
   const { data } = await supabase
     .from("app_users")
@@ -40,9 +45,7 @@ async function getUsername(userId, fallbackEmail) {
   return data?.username || fallbackEmail;
 }
 
-
-
-// 🔥 FETCH USER SERVERS
+// 🔥 Fetch Discord servers stored in DB
 async function getUserServers(userId) {
   const { data } = await supabase
     .from("servers")
@@ -53,8 +56,8 @@ async function getUserServers(userId) {
 }
 
 
+/* ---------------- UI SCREENS ---------------- */
 
-// --- Show Home (profile page) ---
 async function showHome(username, avatarUrl) {
   signupContainer.style.display = "none";
   loginContainer.style.display = "none";
@@ -62,45 +65,54 @@ async function showHome(username, avatarUrl) {
   homeContainer.style.display = "flex";
 
   homeUsername.textContent = `Welcome, ${username}!`;
-  profilePic.src = avatarUrl || "https://via.placeholder.com/80";
+  profilePic.src = avatarUrl || "https://via.placeholder.com/100";
 
-  // 🔥 load servers
+  // load servers
   const servers = await getUserServers(CURRENT_USER.id);
-
   homeServers.innerHTML = "";
+
+  if (servers.length === 0) {
+    homeServers.innerHTML = "<p>No servers yet.</p>";
+    return;
+  }
+
   servers.forEach(server => {
     const div = document.createElement("div");
     div.className = "server-card";
     div.innerHTML = `
       <img src="${server.icon || "https://via.placeholder.com/50"}">
+      <span>${server.name}</span>`;
+    homeServers.appendChild(div);
+  });
+}
+
+function showDashboard(username, avatarUrl) {
+  signupContainer.style.display = "none";
+  loginContainer.style.display = "none";
+  homeContainer.style.display = "none";
+  dashboardContainer.style.display = "flex";
+
+  dashboardGreeting.textContent = `Good afternoon, ${username} 👋`;
+  dashboardProfilePic.src = avatarUrl || "https://via.placeholder.com/100";
+}
 
 
-// 🔥 Dashboard → Profile click
-dashboardProfilePic.addEventListener("click", async () => {
+/* ---------------- NAVIGATION ---------------- */
+
+dashboardProfilePic.onclick = async () => {
   const username = await getUsername(CURRENT_USER.id, CURRENT_USER.email);
   showHome(username, dashboardProfilePic.src);
-});
+};
 
-
-// 🔥 BACK BUTTON (HOME → DASHBOARD)
-document.getElementById("backToDashboardBtn").onclick = async () => {
+backBtn.onclick = async () => {
   const username = await getUsername(CURRENT_USER.id, CURRENT_USER.email);
   showDashboard(username, dashboardProfilePic.src);
 };
 
 
+/* ---------------- AUTH ---------------- */
 
-// --- Logout ---
-logoutBtn.onclick = async () => {
-  await supabase.auth.signOut();
-  homeContainer.style.display = "none";
-  dashboardContainer.style.display = "none";
-  signupContainer.style.display = "flex";
-};
-
-
-
-// --- Signup ---
+// SIGNUP
 registrationForm.addEventListener("submit", async e => {
   e.preventDefault();
 
@@ -125,9 +137,7 @@ registrationForm.addEventListener("submit", async e => {
   showDashboard(username);
 });
 
-
-
-// --- Login ---
+// LOGIN
 loginForm.addEventListener("submit", async e => {
   e.preventDefault();
 
@@ -139,14 +149,21 @@ loginForm.addEventListener("submit", async e => {
   if (error) return alert(error.message);
 
   CURRENT_USER = data.user;
-
   const username = await getUsername(data.user.id, data.user.email);
   showDashboard(username);
 });
 
+// LOGOUT
+logoutBtn.onclick = async () => {
+  await supabase.auth.signOut();
+  homeContainer.style.display = "none";
+  dashboardContainer.style.display = "none";
+  signupContainer.style.display = "flex";
+};
 
 
-// --- Discord OAuth ---
+/* ---------------- DISCORD OAUTH ---------------- */
+
 async function handleDiscordOAuth() {
   await supabase.auth.signInWithOAuth({
     provider: "discord",
@@ -161,8 +178,8 @@ discordLoginSignup.onclick = handleDiscordOAuth;
 discordLoginLogin.onclick = handleDiscordOAuth;
 
 
+/* ---------------- SESSION RESTORE ---------------- */
 
-// --- OAuth return + session restore ---
 supabase.auth.onAuthStateChange(async (event, session) => {
   if (session?.user) {
     CURRENT_USER = session.user;
