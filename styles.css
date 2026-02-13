@@ -21,7 +21,7 @@ body {
   padding: 30px 20px;
   box-shadow: 0 8px 30px rgba(0, 212, 255, 0.12);
   border: 1px solid #1e1e1e;
-  display: none; /* JS toggles display:flex */
+  display: flex; /* JS toggles display:flex */
   flex-direction: column;
   justify-content: flex-start;
   min-height: 100vh;
