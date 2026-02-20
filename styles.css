@@ -122,6 +122,157 @@ button {
   text-align: center;
   color: #00d4ff;
 }
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #0d0d0d;
+  color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  background: #141414;
+  border-radius: 14px;
+  padding: 30px 20px;
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.12);
+  border: 1px solid #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+}
+
+/* Sign-up/login */
+h1 {
+  color: #00d4ff;
+  font-size: 1.9rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 14px;
+  position: relative;
+}
+
+label {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.required {
+  color: #ff4d4d;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #1c1c1c;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: white;
+}
+
+input:focus {
+  outline: none;
+  border-color: #00d4ff;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #00d4ff;
+  color: #0d0d0d;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.success { color: #00d4ff; }
+.error { color: #ff4d4d; }
+
+.login-link {
+  margin-top: 10px;
+  text-align: center;
+  color: #00d4ff;
+  cursor: pointer;
+}
+
+.discord-btn {
+  background: #5865f2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.discord-btn:hover {
+  background: #4752c4;
+}
+
+/* Current homepage (no Font Awesome) */
+#homeContainer { display: none; flex-direction: column; align-items: center; }
+#profilePic { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 10px; border: 2px solid #00d4ff; }
+#homeUsername { font-size: 1.5rem; margin-bottom: 15px; text-align: center; color: #00d4ff; }
+.server-list { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; justify-content: center; }
+.server-card { display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: #1c1c1c; border-radius: 8px; }
+.server-card img { width: 40px; height: 40px; border-radius: 6px; }
+
+#logoutBtn { background: #ff8c00; color: white; margin-bottom: 8px; }
+#logoutBtn:hover { background: #e07b00; }
+
+#deleteAccountBtn { background: #ff4d4d; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: 600; cursor: pointer; margin-bottom: 15px; }
+#deleteAccountBtn:hover { background: #e60000; }
+
+/* Dashboard homepage */
+#dashboardContainer { display: none; flex-direction: column; align-items: center; text-align: center; }
+#dashboardProfilePic { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 12px; border: 2px solid #00d4ff; cursor: pointer; }
+#dashboardGreeting { font-size: 1.5rem; margin-bottom: 4px; color: #00d4ff; }
+.dashboard-cards { width: 100%; margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+.dashboard-card { background: #1c1c1c; padding: 12px 14px; border-radius: 10px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: all 0.2s ease; }
+.dashboard-card i { font-size: 1.5rem; color: #00d4ff; }
+.dashboard-card:hover { background: #222; }
+
+.dashboard-card h3 { color: #e0e0e0; margin-bottom: 4px; font-size: 1rem; }
+.dashboard-card p { font-size: 0.85rem; color: #aaa; }
+
+.dashboard-nav { width: 100%; display: flex; justify-content: space-around; padding: 12px 0; background: #141414; border-top: 1px solid #222; border-radius: 12px; position: sticky; bottom: 0; }
+.dashboard-nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; color: #888; cursor: pointer; transition: color 0.2s ease; }
+.dashboard-nav-item i { font-size: 1.4rem; margin-bottom: 2px; }
+.dashboard-nav-item.active { color: #00d4ff; }
 
 .home-actions {
   display: flex;
@@ -184,31 +335,4 @@ button {
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 8px;
-}
-.discord-btn:hover {
-  background: #4752c4;
-}
-
-#logoutBtn {
-  background: #ff8c00;
-  color: white;
-  margin-bottom: 8px;
-}
-
-#logoutBtn:hover {
-  background: #e07b00;
-}
-
-#deleteAccountBtn {
-  background: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 15px;
-}
-#deleteAccountBtn:hover {
-  background: #e60000;
 }
