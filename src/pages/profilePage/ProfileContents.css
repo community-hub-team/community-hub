@@ -1,0 +1,115 @@
+.page-content {
+  flex: 1;
+  margin-top: 70px; /* space for top nav */
+  padding: 15px;
+  overflow-y: auto;
+}
+
+/* User Info */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.user-info .avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.user-info h2 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.user-info p {
+  color: #9aa4b2;
+}
+
+/* Account Actions */
+.account-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.action-btn {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #1f6feb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  opacity: 0.9;
+}
+
+.action-btn.delete {
+  background: #ff4d4d;
+}
+
+/* Security Settings */
+.security-settings {
+  margin-bottom: 25px;
+}
+
+.security-settings h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #00d4ff;
+}
+
+/* Discord Servers List */
+.discord-servers {
+  margin-bottom: 25px;
+}
+
+.discord-servers h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #00d4ff;
+}
+
+.discord-servers ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.discord-servers li {
+  background: #151c2c;
+  padding: 12px 15px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .user-info h2 {
+    font-size: 20px;
+  }
+  .user-info p {
+    font-size: 12px;
+  }
+  .action-btn {
+    font-size: 14px;
+  }
+  .security-settings h3,
+  .discord-servers h3 {
+    font-size: 14px;
+  }
+}

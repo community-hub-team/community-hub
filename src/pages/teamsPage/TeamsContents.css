@@ -1,0 +1,22 @@
+.phone{
+  width:100vw;
+  height:100vh;
+  background:linear-gradient(180deg,#0f1624,#0b0f17);
+  border-radius:40px;
+  padding:25px 18px;
+  position:relative;
+  overflow:hidden;
+  color:white;
+  font-family:'Inter',sans-serif;
+}
+
+.greeting p{
+  color:#9aa4b2;
+  margin-bottom:25px;
+}
+
+.cards{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}

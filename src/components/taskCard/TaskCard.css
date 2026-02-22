@@ -1,0 +1,47 @@
+.task-card{
+  background:#151c2c;
+  border-radius:18px;
+  padding:18px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.task-card:hover{
+  transform:scale(1.02);
+}
+
+/* icon */
+.task-icon{
+  width:45px;
+  height:45px;
+  border-radius:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:18px;
+}
+
+/* dynamic colors */
+.blue{ background:#1f6feb; }
+.green{ background:#2ea043; }
+.purple{ background:#8957e5; }
+
+/* text */
+.task-text h3{
+  font-size:17px;
+}
+
+.task-text p{
+  font-size:13px;
+  color:#9aa4b2;
+}
+
+/* arrow */
+.arrow{
+  margin-left:auto;
+  opacity:.6;
+}

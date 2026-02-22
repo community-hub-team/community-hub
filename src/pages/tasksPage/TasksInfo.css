@@ -1,0 +1,215 @@
+/* Reset & font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+/* Body & app background */
+body {
+  background: #0b0f17;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Main phone container */
+.phone {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(180deg, #0f1624, #0b0f17);
+  border-radius: 40px;
+  padding: 25px 18px;
+  margin-bottom: 40px;
+}
+
+/* Top bar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.topbar h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.back-btn {
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+/* Hero / task card at top */
+.hero-card {
+  background: #151c2c;
+  border-radius: 22px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+.hero-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  margin: 0 auto 15px;
+}
+
+/* Priority colors for icons */
+.purple {
+  background: #8e44ad;
+} /* Low */
+.green {
+  background: #2ecc71;
+} /* Medium */
+.red {
+  background: #ff4d4d;
+} /* High */
+
+.due {
+  color: #9aa4b2;
+  font-size: 14px;
+}
+
+/* Task details section */
+.details h3 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  color: #00d4ff;
+  font-size: 16px;
+}
+
+.details p {
+  color: #9aa4b2;
+  line-height: 1.5;
+}
+
+/* Priority badge */
+.priority {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Priority badge colors */
+.priority.low {
+  background: #8e44ad;
+} /* Low → purple */
+.priority.medium {
+  background: #2ecc71;
+} /* Medium → green */
+.priority.high {
+  background: #ff4d4d;
+} /* High → red */
+
+/* Complete button */
+.complete-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 18px;
+  background: #1f6feb;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+/* Modal overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+/* Modal container */
+.modal {
+  width: 90%;
+  max-width: 400px;
+  background: #151c2c;
+  border-radius: 25px;
+  padding: 25px;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Modal input groups */
+.input-group {
+  margin-bottom: 15px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #0f1624;
+  color: white;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+/* Description text inside details */
+.description-text p {
+  margin: 4px 0;
+}
+
+/* Modal buttons layout */
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #2b3245;
+  color: white;
+  cursor: pointer;
+}
+
+.create-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #1f6feb;
+  color: white;
+  cursor: pointer;
+}

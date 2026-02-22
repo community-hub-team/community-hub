@@ -1,0 +1,23 @@
+.tasks-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0f1624, #0b0f17);
+  padding: 90px 18px 100px; /* top padding to avoid topbar */
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* <-- allows vertical scrolling */
+  max-height: 100vh; /* <-- confines to viewport */
+}
+
+.tasks-greeting p {
+  color: #9aa4b2;
+  margin-bottom: 25px;
+}
+
+.tasks-cards {
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

@@ -1,0 +1,118 @@
+.section {
+  margin-bottom: 25px;
+}
+
+.section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #00d4ff;
+}
+
+/* Cards */
+.card {
+  background: #151c2c;
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: 0.2s;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card-text h3 {
+  font-size: 17px;
+}
+
+.card-text p {
+  font-size: 13px;
+  color: #9aa4b2;
+}
+
+.arrow {
+  margin-left: auto;
+  opacity: 0.6;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #888;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background: #1f6feb;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Logout card matches other cards */
+.logout-card {
+  background: #151c2c;
+}
+
+.logout-card:hover {
+  transform: scale(1.02);
+}
+
+.logout-card .card-text h3 {
+  color: white;
+}
+
+.logout-card .card-text p {
+  color: #9aa4b2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 100vw) {
+  .topbar h1 {
+    font-size: 20px;
+  }
+  .card-text h3 {
+    font-size: 16px;
+  }
+  .card-text p {
+    font-size: 12px;
+  }
+}

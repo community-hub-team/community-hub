@@ -1,0 +1,43 @@
+.team-card {
+  background: #151c2c;
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.team-card:hover {
+  transform: scale(1.02);
+}
+
+.card-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.card-icon.blue {
+  background: #1f6feb;
+}
+
+.card-text h3 {
+  font-size: 17px;
+}
+
+.card-text p {
+  font-size: 13px;
+  color: #9aa4b2;
+}
+
+.arrow {
+  margin-left: auto;
+  opacity: 0.6;
+}

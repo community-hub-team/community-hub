@@ -1,0 +1,36 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #111827;
+  border-radius: 22px;
+  padding: 12px 10px;
+  display: flex;
+  justify-content: space-around;
+  z-index: 10;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.nav-item i {
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+
+.nav-item.active {
+  color: #1f6feb;
+  opacity: 1;
+}
+
+.nav-item:hover {
+  opacity: 1;
+}
