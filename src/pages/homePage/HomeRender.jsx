@@ -1,6 +1,6 @@
 import TopNavHome from "./TopNavHome";
 import HomeContents from "./HomeContents";
-import BottomNav from "../../components/BottomNav/BottomNav";
+import BottomNav from "../../components/bottomNav/BottomNav";
 import { useUser } from "../../context/UserContext.jsx";
 
 function HomeRender() {

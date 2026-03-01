@@ -1,6 +1,6 @@
 import "./TeamsContents.css";
 import BottomNav from "../../components/bottomNav/BottomNav";
-import TeamCard from "../../components/TeamCard/TeamCard";
+import TeamCard from "../../components/teamCard/TeamCard";
 
 function TeamsContents() {
   return (

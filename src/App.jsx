@@ -10,8 +10,8 @@ import HomeRender from "./pages/homePage/HomeRender.jsx";
 import ProfileRender from "./pages/profilePage/ProfileRender.jsx";
 import TasksRender from "./pages/tasksPage/TasksRender.jsx";
 import TaskInfo from "./pages/tasksPage/TasksInfo.jsx";
-import TeamsRender from "./pages/teamsPage/teamsRender.jsx";
-import SettingsRender from "./pages/settingsPage/settingsRender.jsx";
+import TeamsRender from "./pages/teamsPage/TeamsRender.jsx";
+import SettingsRender from "./pages/SettingsPage/SettingsRender.jsx";
 
 export default function App() {
   return (

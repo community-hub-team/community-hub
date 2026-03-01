@@ -1,5 +1,5 @@
 import "./TasksContents.css";
-import TaskCard from "../../components/TaskCard/TaskCard";
+import TaskCard from "../../components/taskCard/TaskCard";
 
 function TasksContents({ tasks, onTaskClick }) {
   return (
