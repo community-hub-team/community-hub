@@ -1,214 +1,103 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Community Hub - CSS Variables with Light Mode Support */
+
+:root {
+  /* Base Colors - Dark Mode (Default) */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #1e293b;
+  --bg-input: #0f172a;
+  
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* Accent Colors */
+  --accent-cyan: #06b6d4;
+  --accent-blue: #3b82f6;
+  --accent-purple: #6366f1;
+  --accent-green: #22c55e;
+  
+  /* Button Colors */
+  --btn-primary-bg: #06b6d4;
+  --btn-primary-text: #0f172a;
+  --btn-secondary-bg: #3b82f6;
+  --btn-secondary-text: #ffffff;
+  
+  /* Discord Brand */
+  --discord-purple: #5865f2;
+  
+  /* Status Colors */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  
+  /* Borders */
+  --border-color: #334155;
+  --border-radius: 12px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
 }
 
-html, body {
-  height: 100%;
+/* Light Mode Overrides */
+[data-theme="light"] {
+  /* Base Colors */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-input: #f1f5f9;
+  
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  /* Accent Colors - Slightly adjusted for light mode contrast */
+  --accent-cyan: #0891b2;
+  --accent-blue: #2563eb;
+  --accent-purple: #4f46e5;
+  --accent-green: #16a34a;
+  
+  /* Button Colors */
+  --btn-primary-bg: #06b6d4;
+  --btn-primary-text: #ffffff;
+  --btn-secondary-bg: #3b82f6;
+  --btn-secondary-text: #ffffff;
+  
+  /* Borders */
+  --border-color: #e2e8f0;
+  
+  /* Shadows - Lighter for light mode */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
-body {
-  font-family: "Segoe UI", system-ui, sans-serif;
-  background: #0d0d0d;
-  color: #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
-
-.container {
-  width: 100%;
-  max-width: 420px;
-  background: #141414;
-  border-radius: 14px;
-  padding: 30px 20px;
-  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.12);
-  border: 1px solid #1e1e1e;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 100vh;
-}
-
-h1 {
-  color: #00d4ff;
-  font-size: 1.9rem;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.form-group {
-  margin-bottom: 14px;
-  position: relative;
-}
-
-label {
-  color: #a0a0a0;
-  font-size: 0.9rem;
-}
-
-.required {
-  color: #ff4d4d;
-}
-
-input {
-  width: 100%;
-  padding: 12px 14px;
-  background: #1c1c1c;
-  border: 1px solid #333;
-  border-radius: 8px;
-  color: white;
-}
-
-input:focus {
-  outline: none;
-  border-color: #00d4ff;
-}
-
-.toggle-password {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #888;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background: #00d4ff;
-  color: #0d0d0d;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.success {
-  color: #00d4ff;
-}
-.error {
-  color: #ff4d4d;
-}
-
-.login-link {
-  margin-top: 10px;
-  text-align: center;
-  color: #00d4ff;
-  cursor: pointer;
-}
-
-#homeContainer {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-}
-
-#profilePic {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  border: 2px solid #00d4ff;
-}
-
-#homeUsername {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  text-align: center;
-  color: #00d4ff;
-}
-
-.home-actions {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.home-action {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  color: #e0e0e0;
-  transition: all 0.2s ease;
-}
-
-.home-action i {
-  font-size: 1.8rem;
-  margin-bottom: 4px;
-}
-
-.home-action:hover {
-  color: #00d4ff;
-}
-
-.server-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
-  justify-content: center;
-}
-
-.server-card {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  background: #1c1c1c;
-  border-radius: 8px;
-}
-
-.server-card img {
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-}
-
-.discord-btn {
-  background: #5865f2;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 8px;
-}
-.discord-btn:hover {
-  background: #4752c4;
-}
-
-#logoutBtn {
-  background: #ff8c00;
-  color: white;
-  margin-bottom: 8px;
-}
-
-#logoutBtn:hover {
-  background: #e07b00;
-}
-
-#deleteAccountBtn {
-  background: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 15px;
-}
-#deleteAccountBtn:hover {
-  background: #e60000;
+/* Optional: Auto-detect system preference */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-input: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --accent-cyan: #0891b2;
+    --accent-blue: #2563eb;
+    --accent-purple: #4f46e5;
+    --accent-green: #16a34a;
+    --btn-primary-bg: #06b6d4;
+    --btn-primary-text: #ffffff;
+    --btn-secondary-bg: #3b82f6;
+    --btn-secondary-text: #ffffff;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
 }
