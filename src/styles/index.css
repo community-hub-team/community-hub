@@ -6,65 +6,11 @@
   box-sizing: border-box;
 }
 
-:root {
-  /* Surface colors (backgrounds) */
-  --surface-canvas: #0d0d0d;
-  --surface-elevated: #141414;
-  --surface-interactive: #1c1c1c;
-
-  /* Content colors (text/icons) */
-  --content-primary: #e0e0e0;
-  --content-on-brand: #0d0d0d;
-  --content-muted: #888;
-  --content-inverse: white;
-
-  /* Brand/Accent colors */
-  --brand-default: #00d4ff;
-  --brand-border: #1e1e1e;
-  --brand-divider: #333;
-  --brand-shadow: rgba(0, 212, 255, 0.12);
-
-  /* Semantic status colors */
-  --status-error: #ff4d4d;
-  --status-warning: #ff8c00;
-  --status-info: #5865f2;
-
-  /* Interactive states */
-  --state-hover-overlay: 0.9;
-  --state-focus-ring: #00d4ff;
-  --state-hover-discord: #4752c4;
-}
-
-/* Light mode theme - toggle via class on <html> or <body> */
-.light-theme {
-  --surface-canvas: #f5f5f5;
-  --surface-elevated: #ffffff;
-  --surface-interactive: #f0f0f0;
-
-  --content-primary: #1a1a1a;
-  --content-on-brand: #ffffff;
-  --content-muted: #666666;
-  --content-inverse: #1a1a1a;
-
-  --brand-default: #0088cc;
-  --brand-border: #e0e0e0;
-  --brand-divider: #cccccc;
-  --brand-shadow: rgba(0, 136, 204, 0.15);
-
-  --status-error: #dc3545;
-  --status-warning: #ff9800;
-  --status-info: #5865f2;
-
-  --state-focus-ring: #0088cc;
-  --state-hover-discord: #4752c4;
-}
-
 body {
   font-family: "Segoe UI", system-ui, sans-serif;
-  background: var(--surface-canvas);
-  color: var(--content-primary);
   position: relative;
-  margin: 0;
+  margin: 1vh;
+  margin-top: 5vh;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -76,17 +22,18 @@ body {
 .container {
   position: absolute;
   inset: 0;
-  max-width: 420px;
+  margin: auto;
+  width: 95vw;
   max-height: 80vh;
-  margin-top: 5vh;
-  background: var(--surface-elevated);
+  margin-top: auto;
+  margin-bottom: auto;
   border-radius: 5vh;
-  padding: 4vh;
-  box-shadow: 0 8px 30px var(--brand-shadow);
+  padding: 2vh;
   border: 1px solid var(--brand-border);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   justify-content: center;
   transition: all 0.3s ease;
   /* Added: ensure container respects max-height */
@@ -210,7 +157,7 @@ button:hover {
 .fade-out {
   opacity: 0;
   transform: translateY(20px);
-    }  text-align: center;
+  text-align: center;
   font-size: 1.8rem;
 }
 
@@ -223,7 +170,7 @@ input {
   color: white;
 }
 input:focus {
-  outline: none;
+  outline: 1px solid var(--btn-secondary-bg);
   border-color: #00d4ff;
 }
 
@@ -231,7 +178,7 @@ button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  background: #00d4ff;
+  background: var(--btn-secondary-bg);
   color: #0d0d0d;
   border: none;
   border-radius: 8px;

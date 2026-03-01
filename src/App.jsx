@@ -12,7 +12,7 @@ import TasksRender from "./pages/tasksPage/TasksRender.jsx";
 import TaskInfo from "./pages/tasksPage/TasksInfo.jsx";
 import TeamsRender from "./pages/teamsPage/TeamsRender.jsx";
 import SettingsRender from "./pages/SettingsPage/SettingsRender.jsx";
-
+import '../styles.css'
 export default function App() {
   return (
     <UserProvider>
