@@ -1,3 +1,22 @@
+.homeB {
+  height: 100vh;
+  margin-top: -20px;
+  padding-top: 2vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0f1624, #0b0f17);
+}
+.phon, .settings-page-content {
+  background: #0b0f17;
+  border-radius: 50px;
+  width: 100vw;
+  height: 100vh;
+  padding: 25px 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 .section {
   margin-bottom: 25px;
 }

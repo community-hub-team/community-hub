@@ -8,15 +8,10 @@
 
 body {
   font-family: "Segoe UI", system-ui, sans-serif;
-  position: relative;
-  margin: 1vh;
-  margin-top: 5vh;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  min-height: 100vh;
   padding: 1vh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0f1624, #0b0f17);
 }
 
 .container {

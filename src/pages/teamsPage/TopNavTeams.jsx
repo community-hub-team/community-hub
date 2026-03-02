@@ -2,7 +2,7 @@ import "./TopNavTeams.css";
 
 function TopNavTeams() {
   return (
-    <header className="topbar">
+    <header className="topbr">
       <h1>Teams</h1>
 
       <div className="top-icons">

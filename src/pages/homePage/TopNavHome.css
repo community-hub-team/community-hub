@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  padding: 0 4vh 0 4vh ;
 }
 
 .avatar {
@@ -15,4 +15,5 @@
 .bell i {
   font-size: 20px;
   opacity: 0.8;
+  font-size: 3vh;
 }

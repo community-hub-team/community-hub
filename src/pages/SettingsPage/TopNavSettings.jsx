@@ -7,7 +7,7 @@ const TopNavSettings = () => {
     <header className="topbar">
       <h1>Settings</h1>
       <div className="top-icons">
-        <FaBell />
+        <i className="fa-regular fa-bell"></i>
       </div>
     </header>
   );

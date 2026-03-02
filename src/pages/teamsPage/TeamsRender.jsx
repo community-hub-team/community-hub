@@ -4,7 +4,7 @@ import BottomNav from "../../components/bottomNav/BottomNav";
 
 function TeamsRender() {
   return (
-    <div className="phone">
+    <div className="homeB">
       <TopNavTeams />
       <TeamsContents />
       <BottomNav active="teams" />

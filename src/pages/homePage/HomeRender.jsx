@@ -10,7 +10,7 @@ function HomeRender() {
     return <p style={{ color: "white", textAlign: "center" }}>Loading...</p>;
 
   return (
-    <div className="phone">
+    <div className="homeB">
       <TopNavHome />
       <HomeContents user={user} />
       <BottomNav active="home" />

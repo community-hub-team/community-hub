@@ -1,17 +1,19 @@
-.topbar {
-  display: flex;
+.topbr{
+  display:flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
+  align-content:center;
+  justify-items: center;
+  padding: 0 2vh 0 2vh;
 }
 
-.topbar h1 {
-  font-size: 22px;
-  font-weight: 600;
+.topbr h1{
+  font-size:22px;
+  font-weight:600;
 }
 
-.top-icons i {
-  font-size: 20px;
-  cursor: pointer;
-  opacity: 0.8;
+.top-icons i{
+  font-size:20px;
+  margin-left:15px;
+  cursor:pointer;
+  opacity:.8;
 }

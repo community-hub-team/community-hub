@@ -4,7 +4,7 @@ import TeamCard from "../../components/teamCard/TeamCard";
 
 function TeamsContents() {
   return (
-    <div className="phone">
+    <div className="phon">
       <section className="greeting">
         <p>Here are your teams</p>
       </section>

@@ -6,11 +6,11 @@ const HomeContents = () => {
   const { user } = useUser();
 
   return (
-    <div className="phone">
+    <div className="phon">
       {/* Greeting */}
       <section className="greeting">
         <h1>
-          Good afternoon,{" "}
+          Welcome Back,{" "}
           {user?.user_metadata?.full_name ||
             user?.user_metadata?.name ||
             user?.user_metadata?.preferred_username ||
@@ -23,7 +23,7 @@ const HomeContents = () => {
       {/* Cards */}
       <section className="cards">
         <div className="card">
-          <div className="card-icon blue">
+          <div className="card-icon b">
             <i className="fas fa-bullhorn"></i>
           </div>
           <div className="card-text">
@@ -34,7 +34,7 @@ const HomeContents = () => {
         </div>
 
         <div className="card">
-          <div className="card-icon green">
+          <div className="card-icon g">
             <i className="fas fa-list"></i>
           </div>
           <div className="card-text">
@@ -45,7 +45,7 @@ const HomeContents = () => {
         </div>
 
         <div className="card">
-          <div className="card-icon purple">
+          <div className="card-icon p">
             <i className="fas fa-calendar"></i>
           </div>
           <div className="card-text">

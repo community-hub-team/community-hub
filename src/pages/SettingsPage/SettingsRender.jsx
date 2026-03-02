@@ -4,7 +4,7 @@ import BottomNav from "../../components/bottomNav/BottomNav";
 
 function SettingsRender() {
   return (
-    <div className="phone">
+    <div className="homeB">
       <TopNavSettings />
       <SettingsContents />
       <BottomNav active="settings" />
