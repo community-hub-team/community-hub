@@ -2,8 +2,12 @@
   display:flex;
   justify-content: space-between;
   align-content:center;
-  justify-items: center;
-  padding: 0 2vh 0 2vh;
+  padding: 0 4vh 0 4vh ;
+  background: var(--bg-card);
+  padding: 4vh 4vh 3vh 4vh;
+  border-radius: 0 0 50px 50px;
+  margin-top: -2vh;
+  max-height: 80px;
 }
 
 .topbr h1{

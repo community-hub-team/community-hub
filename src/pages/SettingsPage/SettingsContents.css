@@ -6,16 +6,18 @@
   flex-direction: column;
   overflow: hidden;
   background: linear-gradient(180deg, #0f1624, #0b0f17);
+  color: var(--text-primary);
 }
 .phon, .settings-page-content {
-  background: #0b0f17;
+  background: var(--bg-primary);
   border-radius: 50px;
   width: 100vw;
   height: 100vh;
   padding: 25px 18px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: auto;
+  color: var(--text-primary);
 }
 .section {
   margin-bottom: 25px;
@@ -25,12 +27,12 @@
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
-  color: #00d4ff;
+  color: var(--accent-cyan);
 }
 
 /* Cards */
-.card {
-  background: #151c2c;
+.Card {
+  background: var(--bg-card);
   border-radius: 18px;
   padding: 18px;
   display: flex;
@@ -40,19 +42,20 @@
   cursor: pointer;
   transition: 0.2s;
   justify-content: space-between;
+  margin-bottom: 1vh;
 }
 
-.card:hover {
+.Card:hover {
   transform: scale(1.02);
 }
 
-.card-text h3 {
+.Card-text h3 {
   font-size: 17px;
 }
 
-.card-text p {
+.Card-text p {
   font-size: 13px;
-  color: #9aa4b2;
+  color: var(--text-muted);
 }
 
 .arrow {
@@ -81,7 +84,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #888;
+  background: var(--text-secondary);
   transition: 0.4s;
   border-radius: 34px;
 }
@@ -93,45 +96,29 @@
   width: 16px;
   left: 2px;
   bottom: 2px;
-  background: white;
+  background: var(--text-primary);
   transition: 0.4s;
   border-radius: 50%;
 }
 
 input:checked + .slider {
-  background: #1f6feb;
+  background: var(--accent-cyan);
 }
 
 input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-/* Logout card matches other cards */
-.logout-card {
-  background: #151c2c;
-}
-
-.logout-card:hover {
-  transform: scale(1.02);
-}
-
-.logout-card .card-text h3 {
-  color: white;
-}
-
-.logout-card .card-text p {
-  color: #9aa4b2;
-}
 
 /* Responsive adjustments */
 @media (max-width: 100vw) {
   .topbar h1 {
     font-size: 20px;
   }
-  .card-text h3 {
+  .Card-text h3 {
     font-size: 16px;
   }
-  .card-text p {
+  .Card-text p {
     font-size: 12px;
   }
 }

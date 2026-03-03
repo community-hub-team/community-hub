@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { UserProvider } from "./context/UserContext.jsx";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
+
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import AuthRoute from "./components/AuthRoute.jsx";
 
@@ -16,6 +18,7 @@ import '../styles.css'
 export default function App() {
   return (
     <UserProvider>
+      <ThemeProvider>
       <Routes>
         <Route path="/auth/callback" element={<AuthCallback />} />
         {/* Auth-only routes */}
@@ -90,6 +93,7 @@ export default function App() {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="*" element={<Navigate to="/signup" />} />
       </Routes>
+      </ThemeProvider>
     </UserProvider>
   );
 }

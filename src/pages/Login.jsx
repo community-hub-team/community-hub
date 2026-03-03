@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabaseClient.js";
 import { useNavigate } from "react-router-dom";
 import PasswordToggle from "../components/PasswordToggle.jsx";
 import ExternalAuth from "../components/ExternalAuth.jsx";
+import '../styles/index.css'
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -30,6 +31,7 @@ export default function Login() {
             Email <sup style={{ color: "red" }}>*</sup>
           </label>
           <input
+            className="input"
             type="email"
             id="loginEmail"
             placeholder="you@example.com"
@@ -44,6 +46,7 @@ export default function Login() {
             Password <sup style={{ color: "red" }}>*</sup>
           </label>
           <PasswordToggle
+            className="input"
             id="loginPassword"
             placeholder="••••••••"
             value={password}
@@ -51,10 +54,11 @@ export default function Login() {
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit"
+        className="button">Login</button>
       </form>
 
-      <div className="login-link" onClick={() => navigate("/signup")}>
+      <div className="Login-link" onClick={() => navigate("/signup")}>
         Don't have an account? Sign up
       </div>
 

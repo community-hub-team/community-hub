@@ -33,6 +33,7 @@ export default function Signup() {
             Username <sup style={{ color: "red" }}>*</sup>
           </label>
           <input
+            className="input"
             type="text"
             id="username"
             placeholder="Choose a username"
@@ -47,6 +48,7 @@ export default function Signup() {
             Email <sup style={{ color: "red" }}>*</sup>
           </label>
           <input
+            className="input"
             type="email"
             id="email"
             placeholder="you@example.com"
@@ -61,6 +63,7 @@ export default function Signup() {
             Password <sup style={{ color: "red" }}>*</sup>
           </label>
           <PasswordToggle
+            className="input"
             id="password"
             placeholder="••••••••"
             value={password}
@@ -73,6 +76,7 @@ export default function Signup() {
             Confirm Password <sup style={{ color: "red" }}>*</sup>
           </label>
           <PasswordToggle
+            className="input"
             id="confirmPassword"
             placeholder="••••••••"
             value={confirmPassword}
@@ -80,10 +84,11 @@ export default function Signup() {
           />
         </div>
 
-        <button type="submit">Create Account</button>
+        <button type="submit"
+        className="button">Create Account</button>
       </form>
 
-      <div className="login-link" onClick={() => navigate("/login")}>
+      <div className="Login-link" onClick={() => navigate("/login")}>
         Already have an account? Login
       </div>
 

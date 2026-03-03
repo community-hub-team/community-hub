@@ -1,8 +1,14 @@
 .topbar {
-  display: flex;
+  display:flex;
   justify-content: space-between;
-  align-items: center;
+  align-content:center;
   padding: 0 4vh 0 4vh ;
+  background: var(--bg-primary);
+  padding: 3vh 4vh 3vh 4vh;
+  border-radius: 0 0 50px 50px;
+  margin-top: -2vh;
+  max-height: 80px;
+  color: var(--text-primary);
 }
 
 .avatar {

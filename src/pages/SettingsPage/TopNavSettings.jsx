@@ -4,7 +4,7 @@ import { FaBell } from "react-icons/fa";
 
 const TopNavSettings = () => {
   return (
-    <header className="topbar">
+    <header className="topbr">
       <h1>Settings</h1>
       <div className="top-icons">
         <i className="fa-regular fa-bell"></i>

@@ -10,8 +10,9 @@ body {
   font-family: "Segoe UI", system-ui, sans-serif;
   min-height: 100vh;
   padding: 1vh;
-  overflow: hidden;
+  overflow: auto;
   background: linear-gradient(180deg, #0f1624, #0b0f17);
+  color: var(--text-primary);
 }
 
 .container {
@@ -24,7 +25,6 @@ body {
   margin-bottom: auto;
   border-radius: 5vh;
   padding: 2vh;
-  border: 1px solid var(--brand-border);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,38 +36,38 @@ body {
 }
 
 h1 {
-  color: var(--brand-default);
+  color: var(--accent-blue);
   margin-bottom: 20px;
   text-align: center;
   font-size: 1.8rem;
 }
 
-input {
-  width: 100%;
+.input {
+  width: 80vw;
   padding: 12px 14px;
-  background: var(--surface-interactive);
-  border: 1px solid var(--brand-divider);
+  background: var(--bg-card);
+  color: var(--text-secondary);
   border-radius: 8px;
-  color: var(--content-inverse);
+  margin-top: 1rem;
+  display: flex;
 }
-input:focus {
-  outline: none;
-  border-color: var(--state-focus-ring);
+.input:focus {
+  outline: 2px solid var(--accent-blue);
 }
 
-button {
+.button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  background: var(--brand-default);
-  color: var(--content-on-brand);
+  background: var(--accent-blue);
+  color: var(--text-primary);
   border: none;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
 }
 button:hover {
-  opacity: var(--state-hover-overlay);
+  
 }
 
 .form-group {
@@ -81,33 +81,34 @@ button:hover {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: var(--content-muted);
+  color: var(--text-muted);
 }
 
-.login-link {
+.Login-link {
   margin-top: 10px;
-  color: var(--brand-default);
+  color: var(--accent-cyan);
   cursor: pointer;
   text-align: center;
+  font-weight: 700;
 }
 
-.discord-btn {
+.Discord-btn {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
   padding: 12px;
-  background: var(--status-info);
+  background: var(--accent-purple);
   border-radius: 8px;
   border: none;
-  color: var(--content-inverse);
-  font-weight: 600;
+  color: var(--text-primary);
+  font-weight: 700;
   cursor: pointer;
   margin-top: 10px;
-  width: 100%; /* Added: ensure full width */
+  width: 80vw; /* Added: ensure full width */
 }
-.discord-btn:hover {
-  background: var(--state-hover-discord);
+.Discord-btn:hover {
+  
 }
 
 .profile-pic {
@@ -115,7 +116,6 @@ button:hover {
   height: 100px;
   border-radius: 50%;
   margin-bottom: 10px;
-  border: 2px solid var(--brand-default);
 }
 
 .server-list {
@@ -130,7 +130,7 @@ button:hover {
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
-  background: var(--surface-interactive);
+  background: var();
   border-radius: 8px;
 }
 .server-card img {
@@ -162,10 +162,9 @@ input {
   background: #1c1c1c;
   border: 1px solid #333;
   border-radius: 8px;
-  color: white;
 }
 input:focus {
-  outline: 1px solid var(--btn-secondary-bg);
+  outline: 1px solid var();
   border-color: #00d4ff;
 }
 
@@ -173,11 +172,11 @@ button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  background: var(--btn-secondary-bg);
-  color: #0d0d0d;
+  background: var(--accent-blue);
+  color: var(--text-primary);
   border: none;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
 }
 button:hover {
@@ -194,12 +193,12 @@ button:hover {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #888;
+  color: var(--text-muted);
 }
 
 .login-link {
   margin-top: 10px;
-  color: #00d4ff;
+  color: var(--accent-cyan);
   cursor: pointer;
   text-align: center;
 }
@@ -210,11 +209,10 @@ button:hover {
   align-items: center;
   gap: 8px;
   padding: 12px;
-  background: #5865f2;
+  background: var(--accent-purple);
   border-radius: 8px;
   border: none;
-  color: white;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   margin-top: 10px;
 }

@@ -1,14 +1,13 @@
 .homeB {
   height: 100vh;
-  margin-top: -20px;
-  padding-top: 2vh;
+  margin-top: -30px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background: linear-gradient(180deg, #0f1624, #0b0f17);
 }
-.phon {
-  background: #0b0f17;
+.Phone {
+  background: var(--bg-primary);
   border-radius: 50px;
   width: 100vw;
   height: 100vh;
@@ -38,7 +37,7 @@
 }
 
 .card {
-  background: #151c2c;
+  background: var(--bg-card);
   border-radius: 18px;
   padding: 18px;
   display: flex;
@@ -79,7 +78,7 @@
 
 .card-text p {
   font-size: 13px;
-  color: #9aa4b2;
+  color: var(--text-muted);
 }
 
 .arrow {

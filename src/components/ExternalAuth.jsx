@@ -17,7 +17,7 @@ export default function ExternalAuth() {
   };
 
   return (
-    <button className="discord-btn" onClick={handleDiscord}>
+    <button className="Discord-btn" onClick={handleDiscord}>
       <i className="fab fa-discord"></i> Sign in with Discord
     </button>
   );

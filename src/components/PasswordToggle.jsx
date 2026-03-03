@@ -6,6 +6,7 @@ export default function PasswordToggle({ id, placeholder, value, onChange }) {
   return (
     <div className="form-group">
       <input
+        className="input"
         type={show ? "text" : "password"}
         id={id}
         placeholder={placeholder}

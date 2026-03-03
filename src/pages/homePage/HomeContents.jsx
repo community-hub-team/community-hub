@@ -6,7 +6,7 @@ const HomeContents = () => {
   const { user } = useUser();
 
   return (
-    <div className="phon">
+    <div className="Phone">
       {/* Greeting */}
       <section className="greeting">
         <h1>
