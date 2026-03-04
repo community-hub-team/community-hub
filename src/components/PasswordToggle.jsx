@@ -9,7 +9,7 @@ export default function PasswordToggle({ id, placeholder, value, onChange }) {
         className="input"
         type={show ? "text" : "password"}
         id={id}
-        placeholder={placeholder}
+        placeholder={show ? "123456" : "......"}
         value={value}
         onChange={onChange}
         required

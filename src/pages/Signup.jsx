@@ -65,7 +65,6 @@ export default function Signup() {
           <PasswordToggle
             className="input"
             id="password"
-            placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -78,7 +77,6 @@ export default function Signup() {
           <PasswordToggle
             className="input"
             id="confirmPassword"
-            placeholder="••••••••"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />

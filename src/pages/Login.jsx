@@ -48,7 +48,6 @@ export default function Login() {
           <PasswordToggle
             className="input"
             id="loginPassword"
-            placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
