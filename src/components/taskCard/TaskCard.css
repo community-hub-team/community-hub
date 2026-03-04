@@ -1,5 +1,5 @@
 .task-card{
-  background:#151c2c;
+  background: var(--bg-card);
   border-radius:18px;
   padding:18px;
   display:flex;
@@ -8,6 +8,9 @@
   box-shadow:0 10px 25px rgba(0,0,0,.3);
   cursor:pointer;
   transition:.2s;
+  color: var(--text-primary);
+  width: 90vw;
+  align-self: center;
 }
 
 .task-card:hover{
@@ -26,9 +29,9 @@
 }
 
 /* dynamic colors */
-.blue{ background:#1f6feb; }
-.green{ background:#2ea043; }
-.purple{ background:#8957e5; }
+.blue{ background:var(--accent-blue); }
+.green{ background:var(--accent-green); }
+.purple{ background:var(--accent-purple); }
 
 /* text */
 .task-text h3{
@@ -37,7 +40,7 @@
 
 .task-text p{
   font-size:13px;
-  color:#9aa4b2;
+  color:var(--text-muted);
 }
 
 /* arrow */

@@ -4,7 +4,7 @@ import BottomNav from "../../components/bottomNav/BottomNav";
 
 function SettingsRender() {
   return (
-    <div className="homeB">
+    <div className="home">
       <TopNavSettings />
       <SettingsContents />
       <BottomNav active="settings" />

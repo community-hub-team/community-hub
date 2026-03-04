@@ -31,7 +31,7 @@ function TaskInfo() {
 
   return (
     <div className="phone">
-      <header className="topbar">
+      <header className="">
         <div className="back-btn" onClick={() => navigate("/tasks")}>
           <i className="fas fa-arrow-left"></i>
         </div>

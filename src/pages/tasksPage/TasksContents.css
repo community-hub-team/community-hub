@@ -1,8 +1,7 @@
 .tasks-page {
-  min-height: 100vh;
   background: linear-gradient(180deg, #0f1624, #0b0f17);
   padding: 90px 18px 100px; /* top padding to avoid topbar */
-  color: white;
+  color: var(--text-primary);
 
   display: flex;
   flex-direction: column;
@@ -11,7 +10,7 @@
 }
 
 .tasks-greeting p {
-  color: #9aa4b2;
+  color: var(--text-muted);
   margin-bottom: 25px;
 }
 

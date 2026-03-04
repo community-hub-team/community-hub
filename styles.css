@@ -1,6 +1,7 @@
 /* Community Hub - CSS Variables with Light Mode Support */
 
 :root {
+  --bg: linear-gradient(180deg, #0f1624, #0b0f17);
   /* Base Colors - Dark Mode (Default) */
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
@@ -47,6 +48,7 @@
 
 /* Light Mode Overrides */
 [data-theme="light"] {
+  --bg: #fff;
   /* Base Colors */
   --bg-primary: #f8fafc;
   --bg-secondary: #f1f5f9;
@@ -81,6 +83,7 @@
 /* Optional: Auto-detect system preference */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
+    --bg: #fff;
     --bg-primary: #f8fafc;
     --bg-secondary: #f1f5f9;
     --bg-card: #ffffff;

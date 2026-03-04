@@ -3,9 +3,9 @@ import TaskCard from "../../components/taskCard/TaskCard";
 
 function TasksContents({ tasks, onTaskClick }) {
   return (
-    <div className="tasks-cards">
+    <div className=" phone">
       {tasks.length === 0 ? (
-        <p style={{ color: "#9aa4b2", textAlign: "center" }}>No tasks yet</p>
+        <p>No tasks yet</p>
       ) : (
         tasks.map((task) => (
           <TaskCard key={task.id} {...task} onClick={() => onTaskClick(task)} />

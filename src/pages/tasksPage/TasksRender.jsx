@@ -65,7 +65,7 @@ function TasksRender() {
   };
 
   return (
-    <div className="tasks-wrapper">
+    <div className="home">
       <TopNavTasks onAddClick={() => setShowModal(true)} />
 
       <TasksContents
@@ -110,8 +110,12 @@ function TasksRender() {
 
             {dueError && <p style={{ color: "red" }}>{dueError}</p>}
 
-            <button onClick={() => setShowModal(false)}>Cancel</button>
-            <button onClick={createTask}>Create</button>
+            <button
+            className="cancel-btn"
+            onClick={() => setShowModal(false)}>Cancel</button>
+            <button
+            className="create-btn"
+            onClick={createTask}>Create</button>
           </div>
         </div>
       )}

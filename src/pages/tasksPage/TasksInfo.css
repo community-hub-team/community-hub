@@ -8,8 +8,8 @@
 
 /* Body & app background */
 body {
-  background: #0b0f17;
-  color: white;
+  background: var(--bg);
+  color: var(--text-primary);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -21,7 +21,6 @@ body {
 .phone {
   min-height: 100vh;
   width: 100vw;
-  background: linear-gradient(180deg, #0f1624, #0b0f17);
   border-radius: 40px;
   padding: 25px 18px;
   margin-bottom: 40px;
@@ -44,11 +43,15 @@ body {
   font-size: 20px;
   cursor: pointer;
   opacity: 0.8;
+  position: relative;
+  left: 10px;
+  top: 10px;
+  color: var(--text-primary);
 }
 
 /* Hero / task card at top */
 .hero-card {
-  background: #151c2c;
+  background: var(--bg-card);
   border-radius: 22px;
   padding: 25px;
   text-align: center;
@@ -69,17 +72,17 @@ body {
 
 /* Priority colors for icons */
 .purple {
-  background: #8e44ad;
+  background: var(--accent-purple);
 } /* Low */
 .green {
-  background: #2ecc71;
+  background: var(--accent-green);
 } /* Medium */
 .red {
-  background: #ff4d4d;
+  background: var(--error);
 } /* High */
 
 .due {
-  color: #9aa4b2;
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
@@ -87,12 +90,12 @@ body {
 .details h3 {
   margin-top: 15px;
   margin-bottom: 5px;
-  color: #00d4ff;
+  color: var(--accent-cyan);
   font-size: 16px;
 }
 
 .details p {
-  color: #9aa4b2;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -107,13 +110,13 @@ body {
 
 /* Priority badge colors */
 .priority.low {
-  background: #8e44ad;
+  background: var(--accent-purple);
 } /* Low → purple */
 .priority.medium {
-  background: #2ecc71;
+  background: var(--accent-green);
 } /* Medium → green */
 .priority.high {
-  background: #ff4d4d;
+  background: var(--error);
 } /* High → red */
 
 /* Complete button */
@@ -122,8 +125,8 @@ body {
   padding: 16px;
   border: none;
   border-radius: 18px;
-  background: #1f6feb;
-  color: white;
+  background: var(--accent-blue);
+  color: var(--text-primary);
   font-size: 16px;
   cursor: pointer;
   margin-top: 15px;
@@ -133,7 +136,6 @@ body {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,9 +146,10 @@ body {
 .modal {
   width: 90%;
   max-width: 400px;
-  background: #151c2c;
+  background: var(--bg-primary);
   border-radius: 25px;
   padding: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   animation: pop 0.3s ease;
 }
 
@@ -173,8 +176,10 @@ select {
   padding: 12px;
   border: none;
   border-radius: 12px;
-  background: #0f1624;
-  color: white;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  margin-bottom: 2vh;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
 }
 
 textarea {
@@ -199,8 +204,8 @@ textarea {
   padding: 12px;
   border: none;
   border-radius: 12px;
-  background: #2b3245;
-  color: white;
+  background: var(--error);
+  color: var(--text-primary);
   cursor: pointer;
 }
 
@@ -209,7 +214,7 @@ textarea {
   padding: 12px;
   border: none;
   border-radius: 12px;
-  background: #1f6feb;
-  color: white;
+  background: var(--accent-blue);
+  color: var(--text-primary);
   cursor: pointer;
 }

@@ -2,7 +2,7 @@ import "./TopNavTasks.css";
 
 function TopNavTasks({ onAddClick }) {
   return (
-    <header className="tasks-topbar">
+    <header className="topbr">
       <h1>Tasks</h1>
 
       <div className="tasks-top-icons">

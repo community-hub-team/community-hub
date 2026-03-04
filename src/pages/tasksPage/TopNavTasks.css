@@ -1,18 +1,18 @@
-.tasks-topbar{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height:70px;
-  background:#0f1624;
+.topbr{
   display:flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-content:center;
-  padding:20px 20px;
-  z-index:100;
+  padding: 0 4vh 0 4vh ;
+  background: var(--bg-primary);
+  padding: 4vh 4vh 3vh 4vh;
+  border-radius: 0 0 50px 50px;
+  max-height: 80px;
+  margin-bottom: 2vh;
+  color: var(--text-primary);
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
 }
 
-.tasks-topbar h1{
+.topbr h1{
   font-size:22px;
   font-weight:600;
 }

@@ -9,7 +9,7 @@ function TopNavProfile() {
   }
   return (
     <header className="top-nav">
-      <p className="back-btn" onClick={goBack}>
+      <p className="Back-btn" onClick={goBack}>
         <i className="fas fa-arrow-left"></i>
       </p>
       <h1>Profile</h1>
